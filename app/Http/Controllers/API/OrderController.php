@@ -45,7 +45,7 @@ class OrderController extends Controller
 
         DB::commit();
 
-        event(new OrderPlaced($order));
+        // event(new OrderPlaced($order));
 
         return response()->json(['message' => 'Order placed', 'order_id' => $order->id]);
     }

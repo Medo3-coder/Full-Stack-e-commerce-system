@@ -11,7 +11,8 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = Cache::remember('products:filter', 3600, function () use ($request) {
+        $cacheKey = 'products:filter:' . md5(serialize($request->all()));
+        $products = Cache::remember($cacheKey , 3600, function () use ($request) {
             return Product::query()
                 ->search($request->input('search'))
                 ->category($request->input('category'))
