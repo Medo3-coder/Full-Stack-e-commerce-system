@@ -15,11 +15,14 @@ import {
     Grid,
     Paper
 } from '@mui/material';
+import { AuthContext } from '../context/AuthContext';
 // import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const OrderDetailsPage = () => {
     const { id } = useParams();
     const [order, setOrder] = useState(null);
+    // const { logout } = useContext(AuthContext);
+
 
     useEffect(() => {
         const fetchOrder = async () => {

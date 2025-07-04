@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState ,useContext } from 'react';
 import axios from '../api/axios';
 import {
     Container,
@@ -15,6 +15,7 @@ import {
     Pagination,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 const ProductPage = () => {
     const [products, setProducts] = useState([]);
@@ -22,6 +23,7 @@ const ProductPage = () => {
     const [cart, setCart] = useState([]);
     const [quantities, setQuantities] = useState({});
     const [pagination, setPagination] = useState({});
+    const { logout } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const fetchProducts = async (page = 1) => {
@@ -82,6 +84,12 @@ const ProductPage = () => {
     return (
         <Container>
             <Box my={4}>
+                <Box display="flex" justifyContent="flex-end" mb={2}>
+                    <Button variant="outlined" color="error" onClick={() => { logout(); navigate('/'); }}>
+                        Logout
+                    </Button>
+                </Box>
+
                 <Typography variant="h4" gutterBottom>Products</Typography>
 
                 <Grid container spacing={2} mb={2}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import axios from '../api/axios';
 import {
   TextField,
@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
+import { AuthContext } from '../context/AuthContext';
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(4),
@@ -25,6 +26,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const { setUser } = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -44,6 +46,7 @@ const LoginPage = () => {
         try {
             const res = await axios.post('/login', { email, password });
             localStorage.setItem('token', res.data.token);
+            setUser(res.data.user);
             navigate('/products');
         } catch (err) {
             setError(err.response?.data?.message || 'Login failed. Please try again.');
