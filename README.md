@@ -64,7 +64,7 @@ DB_PASSWORD=your_password
 Then run the migrations:
 
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
 
 #### 4. Install Sanctum
@@ -211,8 +211,5 @@ email: test@example.com
 password: password
 ```
 
-```
-
----
 
 ```
