@@ -62,7 +62,7 @@ DB_PASSWORD=your_password
 Then run:
 
 ```bash
-php artisan migrate
+php artisan migrate --seed
 ```
 
 ### 4. Install Sanctum
