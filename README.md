@@ -1,17 +1,21 @@
+
+
+````markdown
 # 🛒 Full Stack E-commerce Test Project
 
 This project is a simplified full-stack e-commerce system built using:
 
-- **Laravel 12 (API backend)**
-- **React.js (frontend using Vite)**
-- **Laravel Sanctum (authentication)**
-- **Material UI (styling)**
+- **Laravel 12** (API backend)
+- **React.js** (frontend using Vite)
+- **Laravel Sanctum** (authentication)
+- **Material UI** (styling)
 
 ---
 
 ## 📦 Features
 
 ### Backend (Laravel 12)
+
 - Products API with search, filters, and pagination
 - Orders API with many-to-many product relationship
 - Laravel Sanctum authentication
@@ -20,6 +24,7 @@ This project is a simplified full-stack e-commerce system built using:
 - Input validation and error handling
 
 ### Frontend (React + Vite)
+
 - Responsive, modern UI using Material UI
 - Login page
 - Product page with:
@@ -34,24 +39,24 @@ This project is a simplified full-stack e-commerce system built using:
 
 ## 🚀 Getting Started
 
-## ⚙️ Backend Setup (Laravel)
+### ⚙️ Backend Setup (Laravel)
 
-### 1. Install Dependencies
+#### 1. Install Dependencies
 
 ```bash
 composer install
-```
+````
 
-### 2. Environment Config
+#### 2. Environment Config
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-### 3. Setup Database
+#### 3. Setup Database
 
-In `.env`, set your DB details:
+Edit `.env` and set your database credentials:
 
 ```
 DB_DATABASE=your_db
@@ -59,45 +64,47 @@ DB_USERNAME=your_user
 DB_PASSWORD=your_password
 ```
 
-Then run:
+Then run the migrations:
 
 ```bash
-php artisan migrate --seed
+php artisan migrate
 ```
 
-### 4. Install Sanctum
+#### 4. Install Sanctum
 
 ```bash
 php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 php artisan migrate
 ```
 
-### 5. Seed Test User (optional)
-
-Create a user manually or via tinker:
+#### 5. Seed a Test User (optional)
 
 ```bash
 php artisan tinker
->>> \App\Models\User::create(['name' => 'Test User', 'email' => 'test@example.com', 'password' => bcrypt('password')]);
+>>> \App\Models\User::create([
+    'name' => 'Test User',
+    'email' => 'test@example.com',
+    'password' => bcrypt('password')
+]);
 ```
 
 ---
 
-## 🎨 Frontend Setup (React + Vite)
+### 🎨 Frontend Setup (React + Vite)
 
-### 1. Install NPM dependencies
+#### 1. Install Node Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Run the frontend
+#### 2. Run the Frontend Dev Server
 
 ```bash
 npm run dev
 ```
 
-Make sure Laravel server is also running:
+Make sure the Laravel server is also running:
 
 ```bash
 php artisan serve
@@ -107,10 +114,10 @@ php artisan serve
 
 ## 🔐 Authentication Flow
 
-* `POST /api/login` with email/password
-* Store the token in `localStorage`
-* Axios automatically attaches `Authorization: Bearer <token>` for authenticated requests
-* Sanctum ensures secure access to `/products`, `/orders`, etc.
+* `POST /api/login` with email and password
+* Save token to `localStorage`
+* Axios auto-injects the `Authorization: Bearer <token>` header
+* Protected endpoints require valid Sanctum token
 
 ---
 
@@ -118,19 +125,19 @@ php artisan serve
 
 ### 🔑 Auth
 
-| Method | Endpoint      | Description        |
-| ------ | ------------- | ------------------ |
-| POST   | `/api/login`  | Login & get token  |
-| GET    | `/api/user`   | Authenticated user |
-| POST   | `/api/logout` | Logout             |
+| Method | Endpoint      | Description              |
+| ------ | ------------- | ------------------------ |
+| POST   | `/api/login`  | Login and get token      |
+| GET    | `/api/user`   | Fetch authenticated user |
+| POST   | `/api/logout` | Logout and revoke token  |
 
 ### 📦 Products
 
-| Method | Endpoint        | Description                    |
-| ------ | --------------- | ------------------------------ |
-| GET    | `/api/products` | List all products with filters |
+| Method | Endpoint        | Description                |
+| ------ | --------------- | -------------------------- |
+| GET    | `/api/products` | List products with filters |
 
-Params:
+Query Parameters:
 
 ```
 ?search=apple&min_price=10&max_price=200&category=phones
@@ -143,7 +150,7 @@ Params:
 | POST   | `/api/orders`      | Place a new order  |
 | GET    | `/api/orders/{id}` | View order details |
 
-Body for placing an order:
+Example request body for placing an order:
 
 ```json
 {
@@ -152,7 +159,7 @@ Body for placing an order:
     { "id": 5, "quantity": 1 }
   ]
 }
-
+```
 
 ---
 
@@ -193,19 +200,16 @@ ecommerce-test/
 ## 📑 Notes
 
 * API is fully stateless and RESTful.
-* React app is integrated using Vite inside `resources/js`.
-* Follows Laravel & React best practices for structure and logic.
+* React app is integrated into Laravel using Vite (in `resources/js`).
+* Follows Laravel & React best practices.
 * No usage of Inertia.js or Livewire.
-* Admin email on "Order Placed" is simulated via log using Events & Listeners.
+* "Order Placed" event logs a simulated admin notification.
 
 ---
 
-## 🧪 Test Login
-
-Use this to test login:
+## 🧪 Test Login Credentials
 
 ```
 email: test@example.com
 password: password
 ```
-
