@@ -1,5 +1,3 @@
-
-
 ````markdown
 # 🛒 Full Stack E-commerce Test Project
 
