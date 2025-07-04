@@ -1,3 +1,6 @@
+
+---
+
 ````markdown
 # 🛒 Full Stack E-commerce Test Project
 
@@ -210,4 +213,10 @@ ecommerce-test/
 ```
 email: test@example.com
 password: password
+```
+
+```
+
+---
+
 ```
