@@ -1,66 +1,213 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+````markdown
+# 🛒 Full Stack E-commerce Test Project
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+This project is a simplified full-stack e-commerce system built using:
 
-## About Laravel
+- **Laravel 12 (API backend)**
+- **React.js (frontend using Vite)**
+- **Laravel Sanctum (authentication)**
+- **Material UI (styling)**
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+---
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 📦 Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Backend (Laravel 12)
+- Products API with search, filters, and pagination
+- Orders API with many-to-many product relationship
+- Laravel Sanctum authentication
+- Event system for order placement (simulated admin notification)
+- Caching of product list for performance
+- Input validation and error handling
 
-## Learning Laravel
+### Frontend (React + Vite)
+- Responsive, modern UI using Material UI
+- Login page
+- Product page with:
+  - Filtering by name, price, category
+  - Pagination
+  - Add to cart and manage quantities
+- Order summary and submission
+- Order details view
+- Auth token handling using Axios interceptors
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+---
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🚀 Getting Started
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## ⚙️ Backend Setup (Laravel)
 
-## Laravel Sponsors
+### 1. Install Dependencies
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+```bash
+composer install
+```
 
-### Premium Partners
+### 2. Environment Config
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```bash
+cp .env.example .env
+php artisan key:generate
+```
 
-## Contributing
+### 3. Setup Database
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+In `.env`, set your DB details:
 
-## Code of Conduct
+```
+DB_DATABASE=your_db
+DB_USERNAME=your_user
+DB_PASSWORD=your_password
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Then run:
 
-## Security Vulnerabilities
+```bash
+php artisan migrate
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 4. Install Sanctum
 
-## License
+```bash
+php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+php artisan migrate
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 5. Seed Test User (optional)
+
+Create a user manually or via tinker:
+
+```bash
+php artisan tinker
+>>> \App\Models\User::create(['name' => 'Test User', 'email' => 'test@example.com', 'password' => bcrypt('password')]);
+```
+
+---
+
+## 🎨 Frontend Setup (React + Vite)
+
+### 1. Install NPM dependencies
+
+```bash
+npm install
+```
+
+### 2. Run the frontend
+
+```bash
+npm run dev
+```
+
+Make sure Laravel server is also running:
+
+```bash
+php artisan serve
+```
+
+---
+
+## 🔐 Authentication Flow
+
+* `POST /api/login` with email/password
+* Store the token in `localStorage`
+* Axios automatically attaches `Authorization: Bearer <token>` for authenticated requests
+* Sanctum ensures secure access to `/products`, `/orders`, etc.
+
+---
+
+## 📘 API Documentation
+
+### 🔑 Auth
+
+| Method | Endpoint      | Description        |
+| ------ | ------------- | ------------------ |
+| POST   | `/api/login`  | Login & get token  |
+| GET    | `/api/user`   | Authenticated user |
+| POST   | `/api/logout` | Logout             |
+
+### 📦 Products
+
+| Method | Endpoint        | Description                    |
+| ------ | --------------- | ------------------------------ |
+| GET    | `/api/products` | List all products with filters |
+
+Params:
+
+```
+?search=apple&min_price=10&max_price=200&category=phones
+```
+
+### 🛒 Orders
+
+| Method | Endpoint           | Description        |
+| ------ | ------------------ | ------------------ |
+| POST   | `/api/orders`      | Place a new order  |
+| GET    | `/api/orders/{id}` | View order details |
+
+Body for placing an order:
+
+```json
+{
+  "products": [
+    { "id": 1, "quantity": 2 },
+    { "id": 5, "quantity": 1 }
+  ]
+}
+
+
+---
+
+## 📂 Project Structure
+
+```
+ecommerce-test/
+├── app/
+│   └── Models, Events, Listeners, Controllers
+├── routes/
+│   └── api.php
+├── resources/
+│   └── js/              <-- React frontend
+│       ├── pages/
+│       ├── api/axios.js
+│       ├── App.jsx
+│       └── main.jsx
+├── public/
+├── vite.config.js
+├── .env.example
+├── README.md
+```
+
+---
+
+## ⏱️ Time Tracking
+
+| Task                     | Estimate     | Actual         |
+| ------------------------ | ------------ | -------------- |
+| Laravel API & Auth       | 3 hrs        | \~3 hrs        |
+| Product & Order Logic    | 3 hrs        | \~3 hrs        |
+| React UI + Logic         | 4 hrs        | \~4 hrs        |
+| Testing, Cleanup, README | 1.5 hrs      | \~1.5 hrs      |
+| **Total**                | **11.5 hrs** | **\~11.5 hrs** |
+
+---
+
+## 📑 Notes
+
+* API is fully stateless and RESTful.
+* React app is integrated using Vite inside `resources/js`.
+* Follows Laravel & React best practices for structure and logic.
+* No usage of Inertia.js or Livewire.
+* Admin email on "Order Placed" is simulated via log using Events & Listeners.
+
+---
+
+## 🧪 Test Login
+
+Use this to test login:
+
+```
+email: test@example.com
+password: password
+```
+
+```
