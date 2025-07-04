@@ -12,7 +12,7 @@ import {
     CardActions,
     InputLabel,
     Select,
-    MenuItem,
+    Pagination,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -72,8 +72,12 @@ const ProductPage = () => {
     };
 
     const handleSearch = () => {
-        fetchProducts();
+        fetchProducts(1);
     };
+
+    const handlePageChange = (event , value) => {
+        fetchProducts(value);
+    }
 
     return (
         <Container>
@@ -124,6 +128,14 @@ const ProductPage = () => {
                     ))}
                 </Grid>
 
+                <Box display="flex" justifyContent="center" mt={4}>
+                    <Pagination
+                        count={pagination.totalPages}
+                        page={pagination.currentPage}
+                        onChange={handlePageChange}
+                        color="primary"
+                    />
+                </Box>
                 <Box mt={4}>
                     <Typography variant="h5">Cart</Typography>
                     {cart.length === 0 ? (
