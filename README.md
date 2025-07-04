@@ -1,4 +1,3 @@
-````markdown
 # 🛒 Full Stack E-commerce Test Project
 
 This project is a simplified full-stack e-commerce system built using:
